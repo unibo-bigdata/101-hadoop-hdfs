@@ -4,18 +4,22 @@ Module 1, Big Data course (81932), University of Bologna.
 
 ## 101-1 Cluster setup
 
-Goal: setup connections to the classroom's cluster via Putty and WinSCOP
+Goal: setup connections to the classroom's cluster via Putty and WinSCP
 
-- Connect to isi-vclust**N**.csr.unibo.it on Putty
-  - **N** is the number of the node you have been assigned to
-  - Get your credentials from https://tinyurl.com/bigdata20users 
-  - If connecting from outside UniBo network, you first need to connect to 137.204.72.5 on Putty; use your institutional credentials to connect; then, use another window to connect to isi-vclust
+- Get your credentials from https://tinyurl.com/bigdata20users 
+- If connecting from outside UniBo network:
+  - Connect to 137.204.72.5 on Putty using your institutional credentials
+  - Connect to the cluster within Putty: ```ssh <username>@<host>``` where <host> is isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to)
+  - File transfer is available only via command line SCP: ```scp [OPTION] [user@]SRC_HOST:]file1 [user@]DEST_HOST:]file2```
+  - The web UI on the virtual cluster are not reachable
+- If connecting from inside UniBo network:
+  - Connect to isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to) on Putty
+  - File transfer is available via WinSCP
+  - The web UI on the virtual cluster are reachable
 - Change your password!
-```passwd <username>```
+```passwd```
 - Create a directory in your home called bigdata
 ```mkdir <foldername>```
-- Connect to isi-vclustN.csr.unibo.it via WinSCP
-- Check the existence of the directory
 
 ## 101-2 HDFS disk usage
 
@@ -26,6 +30,8 @@ hdfs dfs -df -h
 hdfs dfs -du -h /
 hdfs dfsadmin -report
 ```
+
+The second and third commands provide full results only to the superuser ```hdfs```.
 
 ## 101-3 HDFS storing files
 
@@ -55,11 +61,15 @@ HDFS provides a basic web interface with read permissions on the filesystem.
 
 Go to [Cloudera Manager](http://137.204.72.233:7180/cmf/home) (Username: student - Password: student) > HDFS service (left panel) > NameNome Web UI > Utilities > Browse the file system. Navigate to your folder and click on your file to check blocks' locations and download the file.
 
-### From Apache Hue
+Notice: the provide URL works only inside UniBo network, but you can try Cloudera Manager in the virtual machine.
+
+### From Apache Hue (works only inside UniBo network)
 
 Apache Hue offers a more complete navigation of the filesystem, with the possibility to create/move/rename/delete folders and files. You can change permissions, download files, and use the drag&drop feature to easily upload new files and folders.
 
 Go to [Apache Hue](http://137.204.72.233:8888) and click on the three-lines menu (top-left) > Files.
+
+Notice: the provide URL works only inside UniBo network, but you can try Apache Hue in the virtual machine.
 
 ## 101-4 Virtual machine setup
 
