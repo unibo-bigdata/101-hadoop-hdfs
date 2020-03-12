@@ -11,11 +11,11 @@ Goal: setup connections to the classroom's cluster via Putty and WinSCP
   - Connect to 137.204.72.5 on Putty using your institutional credentials: ```ssh 'name.surname@studio.unibo.it'@137.204.72.5``` 
   - Connect to the cluster within Putty: ```ssh username@host``` where ```host``` is isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to)
   - File transfer is available only via command line SCP: ```scp [OPTION] [user@]SRC_HOST:]file1 [user@]DEST_HOST:]file2```
-  - The web UI on the virtual cluster are not reachable
+  - The web UIs on the virtual cluster are not reachable
 - If connecting from inside UniBo network:
   - Connect to isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to) on Putty
   - File transfer is available via WinSCP
-  - The web UI on the virtual cluster are reachable
+  - The web UIs on the virtual cluster are reachable
 - Change your password!
 ```passwd```
 - Create a directory in your home called bigdata
@@ -47,10 +47,11 @@ hdfs dfs -mkdir bigdata
 # Create a dummy file in your folder in the local file system
 echo 'This is a dummy file' > dummy.txt
 # Put the dummy file to your bigdata folder in HDFS
-hdfs dfs -put bigdata/dummy.txt
+hdfs dfs -put dummy.txt bigdata
 # Change the replication factor of the dummy file to 5
 hdfs dfs -setrep -w 5 bigdata/dummy.txt
 # Verify that the number of replicas has actually increased
+hdfs dfs -ls bigdata
 # Delete the test folder and the dummy.txt file on HDFS
 hdfs dfs –rm -skipTrash bigdata/dummy.txt
 ```
@@ -59,15 +60,15 @@ hdfs dfs –rm -skipTrash bigdata/dummy.txt
 
 HDFS provides a basic web interface with read permissions on the filesystem. 
 
-Go to [Cloudera Manager](http://137.204.72.233:7180/cmf/home) (Username: student - Password: student) > HDFS service (left panel) > NameNome Web UI > Utilities > Browse the file system. Navigate to your folder and click on your file to check blocks' locations and download the file.
+Go to [Cloudera Manager](http://137.204.72.233:7180/cmf/home) (Username: student - Password: dataisthenewoil) > HDFS service (left panel) > NameNome Web UI > Utilities > Browse the file system. Navigate to your folder and click on your file to check blocks' locations and download the file.
 
-Notice: the provide URL works only inside UniBo network, but you can try Cloudera Manager in the virtual machine.
+Notice: the provided URL works only inside UniBo network, but you can try Cloudera Manager in the virtual machine.
 
 ### From Apache Hue (works only inside UniBo network)
 
 Apache Hue offers a more complete navigation of the filesystem, with the possibility to create/move/rename/delete folders and files. You can change permissions, download files, and use the drag&drop feature to easily upload new files and folders.
 
-Go to [Apache Hue](http://137.204.72.233:8888) and click on the three-lines menu (top-left) > Files.
+Go to [Apache Hue](http://137.204.72.233:8889) and click on the three-lines menu (top-left) > Files.
 
 Notice: the provide URL works only inside UniBo network, but you can try Apache Hue in the virtual machine.
 
@@ -98,13 +99,27 @@ We will use 6 GB of RAM to run Cloudera Express with a reduced number of service
 
 Put the content of the dataset folder in the virtual machine either by setting Git in the virtual machine, or by copy/pasting the folder from your physical machine.
 
-Then, create folder "/bigdata/dataset" in the home folder on HDFS and put there the files. Either use the following commands from a Terminal windows or use the web UI of Hue.
+Then, create folder "/bigdata/dataset" in the home folder on HDFS and put there the files. Either use the following commands from a Terminal window or use the web UI of Hue.
+
+From terminal:
 
 ```shell
+# Impersonate the 'hdfs' superuser to get write permissions on /
+export HADOOP_USER_NAME=hdfs
 hdfs dfs -mkdir /bigdata
 hdfs dfs -mkdir /bigdata/dataset
 hdfs dfs -put <localpath1> ... <localpathN> /bigdata/dataset
+export HADOOP_USER_NAME=
 ```
+
+From Hue:
+
+- Login (Username: cloudera - Password: cloudera) 
+- Click on Cloudera (top-right corner) > Manage users
+- Either add a user "hdfs" (or update it if it exists): put a password of your choice and assign it to the "default" group
+- Logout and login with the hdfs user
+- Click on the top-left icon > Files
+- Create directories and add the files
 
 ## 101-5 Differences between Cluster and Virtual machine
 
