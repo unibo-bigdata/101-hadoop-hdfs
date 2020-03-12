@@ -8,8 +8,8 @@ Goal: setup connections to the classroom's cluster via Putty and WinSCP
 
 - Get your credentials from https://tinyurl.com/bigdata20users 
 - If connecting from outside UniBo network:
-  - Connect to 137.204.72.5 on Putty using your institutional credentials
-  - Connect to the cluster within Putty: ```ssh <username>@<host>``` where <host> is isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to)
+  - Connect to 137.204.72.5 on Putty using your institutional credentials: ```ssh 'name.surname@studio.unibo.it'@137.204.72.5``` 
+  - Connect to the cluster within Putty: ```ssh username@host``` where ```host``` is isi-vclust**N**.csr.unibo.it (**N** is the number of the node you have been assigned to)
   - File transfer is available only via command line SCP: ```scp [OPTION] [user@]SRC_HOST:]file1 [user@]DEST_HOST:]file2```
   - The web UI on the virtual cluster are not reachable
 - If connecting from inside UniBo network:
@@ -98,11 +98,12 @@ We will use 6 GB of RAM to run Cloudera Express with a reduced number of service
 
 Put the content of the dataset folder in the virtual machine either by setting Git in the virtual machine, or by copy/pasting the folder from your physical machine.
 
-Then, create a "dataset" folder in the home folder on HDFS and put there the files. Either use the following commands from a Terminal windows or use the web UI of Hue.
+Then, create folder "/bigdata/dataset" in the home folder on HDFS and put there the files. Either use the following commands from a Terminal windows or use the web UI of Hue.
 
 ```shell
-hdfs dfs -mkdir dataset
-hdfs dfs -put <localpath1> ... <localpathN> dataset
+hdfs dfs -mkdir /bigdata
+hdfs dfs -mkdir /bigdata/dataset
+hdfs dfs -put <localpath1> ... <localpathN> /bigdata/dataset
 ```
 
 ## 101-5 Differences between Cluster and Virtual machine
