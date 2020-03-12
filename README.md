@@ -119,7 +119,7 @@ From Hue:
 - Either add a user "hdfs" (or update it if it exists): put a password of your choice and assign it to the "default" group
 - Logout and login with the hdfs user
 - Click on the top-left icon > Files
-- Create directories and add the files
+- Create the directories and add the files
 
 ## 101-5 Differences between Cluster and Virtual machine
 
