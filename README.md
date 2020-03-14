@@ -127,4 +127,6 @@ From Hue:
 - CDH: 5.13 both
 - Hadoop: 2.6 both
 - Spark: 1.6 both
+  - Scala: 2.10.5
 - Spark2: 2.1 cluster only
+  - Scala: 2.11.8
